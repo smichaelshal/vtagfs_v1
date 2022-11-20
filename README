@@ -1,0 +1,46 @@
+lsmod | grep vtagfs
+
+insmod vtagfs.ko
+
+mkdir -p /mnt/vtagfs
+
+
+mount -t vtagfs none /mnt/vtagfs
+
+cat /proc/filesystems | grep vtagfs
+
+cat /proc/mounts | grep vtagfs
+
+stat -f /mnt/vtagfs
+
+
+
+umount /mnt/vtagfs
+
+rmmod vtagfs
+
+dmesg | tail -10
+
+
+
+touch /mnt/vtagfs/f1
+echo "hello world" > /mnt/vtagfs/f1
+cat /mnt/vtagfs/f1
+
+mkdir -p /mnt/vtagfs/d1/d2
+touch /mnt/vtagfs/d1/f1
+ls -lai /mnt/vtagfs/d1
+
+touch /root/lf2
+echo "bla" > /root/lf2
+cat /root/lf2
+
+ln /root/lf2 /mnt/vtagfs/d1/lf3
+
+
+
+make clean
+
+cd ./include/ramfs/
+rm -rf *.o *~ core .depend .*.cmd *.ko *.mod.c .tmp_versions *.mod modules.order *.symvers .*.o.d .*.o.cmd
+cd ../..
